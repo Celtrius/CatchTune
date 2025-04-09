@@ -8,6 +8,8 @@
     "96": "icon/96.png",
     "128": "icon/128.png"
   },
+  "name": "CatchTune",
+  "version": "1.0.0",
   "{{chrome}}.action": {
     "default_popup": "src/app/popup.html"
   },
@@ -15,25 +17,20 @@
     "default_popup": "src/app/popup.html"
   },
   "background": {
-    "{{chrome}}.service_worker": "src/app/background.js",
-    "{{firefox}}.scripts": ["src/app/background.js"]
+    "{{chrome}}.service_worker": "src/app/background.ts",
+    "{{firefox}}.scripts": ["src/app/background.ts"]
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/app/contentScript.js"],
+      "js": ["src/app/contentScript.ts"],
       "run_at": "document_idle"
     }
   ],
   "permissions": ["tabs", "activeTab", "scripting", "webNavigation"],
   "host_permissions": ["<all_urls>"],
-  "build": {
-    "rollupOptions": {
-      "output": {
-        "format": "es",
-        "entryFileNames": "src/app/[name].js",
-        "inlineDynamicImports": false
-      }
-    }
-  }
+  "{{chrome}}.content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "{{firefox}}.content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
 }

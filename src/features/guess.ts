@@ -27,8 +27,11 @@ export async function runGuess(): Promise<any> {
 async function reserveFFmpeg(): Promise<FFmpeg> {
   const ffmpeg = new FFmpeg();
   console.log("[Librezam] Loading FFmpeg...");
-  await ffmpeg.load();
+  await ffmpeg.load({
+    coreURL: browser.runtime.getURL("libs/ffmpeg-core/ffmpeg-core.js"),
+  });
   console.log("[Librezam] FFmpeg loaded.");
+
   return ffmpeg;
 }
 
